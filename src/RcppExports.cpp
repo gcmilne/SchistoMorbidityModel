@@ -12,18 +12,19 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // RunMorbidityModel
-List RunMorbidityModel(NumericVector pars, int runtime, NumericVector wormburden_female, NumericVector wormburden_male, NumericVector cumulative_wormburden_female, NumericVector cumulative_wormburden_male);
-RcppExport SEXP _SchistoMorbidityModel_RunMorbidityModel(SEXP parsSEXP, SEXP runtimeSEXP, SEXP wormburden_femaleSEXP, SEXP wormburden_maleSEXP, SEXP cumulative_wormburden_femaleSEXP, SEXP cumulative_wormburden_maleSEXP) {
+List RunMorbidityModel(NumericVector pars, int runtime, double stepsize, NumericVector wormburden_female, NumericVector wormburden_male, NumericVector cumulative_wormburden_female, NumericVector cumulative_wormburden_male);
+RcppExport SEXP _SchistoMorbidityModel_RunMorbidityModel(SEXP parsSEXP, SEXP runtimeSEXP, SEXP stepsizeSEXP, SEXP wormburden_femaleSEXP, SEXP wormburden_maleSEXP, SEXP cumulative_wormburden_femaleSEXP, SEXP cumulative_wormburden_maleSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type pars(parsSEXP);
     Rcpp::traits::input_parameter< int >::type runtime(runtimeSEXP);
+    Rcpp::traits::input_parameter< double >::type stepsize(stepsizeSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type wormburden_female(wormburden_femaleSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type wormburden_male(wormburden_maleSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type cumulative_wormburden_female(cumulative_wormburden_femaleSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type cumulative_wormburden_male(cumulative_wormburden_maleSEXP);
-    rcpp_result_gen = Rcpp::wrap(RunMorbidityModel(pars, runtime, wormburden_female, wormburden_male, cumulative_wormburden_female, cumulative_wormburden_male));
+    rcpp_result_gen = Rcpp::wrap(RunMorbidityModel(pars, runtime, stepsize, wormburden_female, wormburden_male, cumulative_wormburden_female, cumulative_wormburden_male));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -39,7 +40,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_SchistoMorbidityModel_RunMorbidityModel", (DL_FUNC) &_SchistoMorbidityModel_RunMorbidityModel, 6},
+    {"_SchistoMorbidityModel_RunMorbidityModel", (DL_FUNC) &_SchistoMorbidityModel_RunMorbidityModel, 7},
     {"_SchistoMorbidityModel_rcpp_hello_world", (DL_FUNC) &_SchistoMorbidityModel_rcpp_hello_world, 0},
     {NULL, NULL, 0}
 };

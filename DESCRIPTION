@@ -1,12 +1,11 @@
 Package: SchistoMorbidityModel
 Type: Package
-Title: What the Package Does in One 'Title Case' Line
+Title: A novel mathematical morbidity model of schistosomiasis liver fibrosis
 Version: 1.0
-Date: 2023-10-23
-Author: Your Name
-Maintainer: Your Name <your@email.com>
-Description: One paragraph description of what the package does as one or more full
-         sentences.
+Date: 2023-11-02
+Author: Gregory Milne
+Maintainer: Gregory Milne <gmilne@gmail.com>
+Description: One paragraph description of what the package does as one or more full sentences.
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.11)
 LinkingTo: Rcpp,RcppEigen,RcppNumerical

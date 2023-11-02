@@ -15,10 +15,6 @@ const int na = 51, amax = 51;
 const double da = na/amax, aged=1/da;
 const int nlg = 3; // number of liver groups (AB, C, DEF)
 const double shape = 1.11, scale = 20.69;
-// const double stepsize = 1.0/12;  //time dt
-// const double stepsize = 1.0/52;  //time dt
-// const double stepsize = 1.0/120;  //time dt
-const double stepsize = 1.0/364;  //time dt
 
 // define parameters that are assigned values at run time
 double tau1, tau2, eta1, eta2;
@@ -171,7 +167,7 @@ List Derivs() {
 
 
 // function to implement RK4 integration
-void RK4() {
+List RK4(NumericMatrix male_states, NumericMatrix female_states, double stepsize){
   
   // set current states in a temporary matrix (use Rcpp::clone() to ensure changes in tmp states don't affect states)
   female_tmp_states = Rcpp::clone(female_states);
@@ -226,6 +222,12 @@ void RK4() {
     }
   }
   
+  // Create a List to store both updated states and return it
+  List result;
+  result["male_updated_states"]   = male_updated_states;
+  result["female_updated_states"] = female_updated_states;
+  return result;
+  
 }
 
 
@@ -263,9 +265,9 @@ void DerivsRatios() {
 
 
 // [[Rcpp::export]]
-List RunMorbidityModel(NumericVector pars, int runtime, NumericVector wormburden_female, NumericVector wormburden_male,
+List RunMorbidityModel(NumericVector pars, int runtime, double stepsize, NumericVector wormburden_female, NumericVector wormburden_male,
                        NumericVector cumulative_wormburden_female, NumericVector cumulative_wormburden_male) {
-  // List RunMorbidityModel(NumericVector pars, int runtime, NumericMatrix wormburden_female, NumericMatrix wormburden_male, 
+  // List RunMorbidityModel(NumericVector pars, int runtime, double stepsize, NumericMatrix wormburden_female, NumericMatrix wormburden_male, 
   //                        NumericMatrix cumulative_wormburden_female, NumericMatrix cumulative_wormburden_male) {
   
   //define parameters to be varied
@@ -335,7 +337,9 @@ List RunMorbidityModel(NumericVector pars, int runtime, NumericVector wormburden
     // cum_wb_male   = cumulative_wormburden_male(h,_);
 
     // perform RK4 integration
-    RK4();
+    List updated_states   = RK4(male_states, female_states, stepsize);
+    male_updated_states   = as<NumericMatrix>(updated_states["male_updated_states"]);
+    female_updated_states = as<NumericMatrix>(updated_states["female_updated_states"]);
     
     // replace state matrices with updated matrices (done in long form)
     for (int i = 0; i < na; i++) {
